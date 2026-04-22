@@ -13,10 +13,18 @@ st.title("🛒 Segmentación de Clientes en Tiempo Real")
 st.sidebar.header("⚙️ Configuración")
 k = st.sidebar.slider("Número de Clusters (K)", min_value=2, max_value=10, value=3)
 
-uploaded_file = st.file_uploader("online_retail_lite.csv", type=["csv"])
+# Limpiar session_state si cambia K
+if "k_anterior" not in st.session_state:
+    st.session_state["k_anterior"] = k
+if k != st.session_state["k_anterior"]:
+    st.session_state["k_anterior"] = k
+    if "rfm" in st.session_state:
+        del st.session_state["rfm"]
+
+uploaded_file = st.file_uploader("Sube tu archivo CSV", type=["csv"])
 
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file,)
+    df = pd.read_csv(uploaded_file)
     st.success(f"Archivo cargado: {df.shape[0]} filas")
     st.dataframe(df.head())
 
@@ -39,7 +47,6 @@ if uploaded_file is not None:
         modelo = KMeans(n_clusters=k, random_state=42, n_init=10)
         rfm["Cluster"] = modelo.fit_predict(rfm_scaled)
 
-        # Guardar en session_state
         st.session_state["rfm"] = rfm
         st.session_state["scaler"] = scaler
         st.session_state["modelo"] = modelo
