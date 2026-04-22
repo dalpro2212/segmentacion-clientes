@@ -1,4 +1,3 @@
-import plotly.express as px
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,6 +5,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import datetime as dt
+import plotly.express as px
 
 st.set_page_config(page_title="Segmentación de Clientes", page_icon="🛒", layout="wide")
 st.title("🛒 Segmentación de Clientes en Tiempo Real")
