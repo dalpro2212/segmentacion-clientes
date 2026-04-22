@@ -58,6 +58,12 @@ if uploaded_file is not None:
 
         st.success(f"¡Listo! {k} clusters encontrados.")
         st.dataframe(rfm.head())
+        ### 📝 Reporte de Convergencia
+Buenas jeje, El algoritmo **K-Means** convergió con **K={k} clusters** en **{modelo.n_iter_} iteraciones**.
+El modelo entrenó sobre **{len(rfm)} clientes** usando las variables RFM (Recencia, Frecuencia y Monto),
+normalizadas con StandardScaler. La inercia final (suma de distancias al centroide más cercano) fue de
+**{modelo.inertia_:.2f}**, lo que indica qué tan compactos son los clusters formados.
+""")
 
         fig = px.scatter(
             rfm, x="Recencia", y="Frecuencia",
