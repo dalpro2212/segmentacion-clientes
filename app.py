@@ -13,7 +13,6 @@ st.title("🛒 Segmentación de Clientes en Tiempo Real")
 st.sidebar.header("⚙️ Configuración")
 k = st.sidebar.slider("Número de Clusters (K)", min_value=2, max_value=10, value=3)
 
-# Limpiar session_state si cambia K
 if "k_anterior" not in st.session_state:
     st.session_state["k_anterior"] = k
 if k != st.session_state["k_anterior"]:
@@ -58,8 +57,9 @@ if uploaded_file is not None:
 
         st.success(f"¡Listo! {k} clusters encontrados.")
         st.dataframe(rfm.head())
-        ### 📝 Reporte de Convergencia
-Buenas jeje, El algoritmo **K-Means** convergió con **K={k} clusters** en **{modelo.n_iter_} iteraciones**.
+        st.markdown(f"""
+### 📝 Reporte de Convergencia
+El algoritmo **K-Means** convergió con **K={k} clusters** en **{modelo.n_iter_} iteraciones**.
 El modelo entrenó sobre **{len(rfm)} clientes** usando las variables RFM (Recencia, Frecuencia y Monto),
 normalizadas con StandardScaler. La inercia final (suma de distancias al centroide más cercano) fue de
 **{modelo.inertia_:.2f}**, lo que indica qué tan compactos son los clusters formados.
